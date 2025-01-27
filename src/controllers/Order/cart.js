@@ -11,15 +11,15 @@ const cart = async (req, res) => {
             return res.status(400).json({ error: "Product not found" });
         }
         const price = product.price * quantity;
-        let cart = await Items.findOne({ user: userId });
+        let cart = await Items.findOne({ user: userId });  //if cart is empty will create the new cart
         if (!cart) {
             cart = new Items({
-                user: userId,
+                user: userId,   //heres the new cart
                 items: [],
                 totalPrice: 0
             });
         }
-        const itemIndex = cart.items.findIndex(item => 
+        const itemIndex = cart.items.findIndex(item =>    //compare if the item which is in the cart is db or not
             item.product.toString() === new mongoose.Types.ObjectId(productId).toString()  
         );
         if (itemIndex > -1) { //-1 reutrn when comparison not found

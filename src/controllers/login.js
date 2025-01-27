@@ -23,7 +23,7 @@ const adminLogin = async (req, res) => {
 
     // const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: '1h' });
     // If successful, send success response
-    res.status(200).json({ message: 'Login successful', admin: existingAdmin , token : token});
+    res.status(200).json({ message: 'Login successful', admin: existingAdmin });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });

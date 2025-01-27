@@ -27,7 +27,7 @@ router.post('/user/Login', userLogin.userLogin);
 
 router.post('/user/login')
 //Products
-router.post('/product', auth.authenticateToken, uploads.single("image"), product.createproduct);
+router.post('/product', uploads.single("image"), product.createproduct);
 router.delete('/delete/product/:id', productDelete.productDelete)
 router.put('/update/product/:id', updateUpload.single("image"), updateProduct.updateProduct)
 router.get('/get/product', getProduct.getProducts)

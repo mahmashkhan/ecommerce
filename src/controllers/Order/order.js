@@ -17,7 +17,6 @@ const order = async (req, res) => {
         });
 
         await order.save();
-
         // Clear the cart after placing the order
         cart.items = [];
         cart.totalPrice = 0;
