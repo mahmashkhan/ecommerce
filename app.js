@@ -2,11 +2,22 @@ const express = require('express');
 const mongoose = require('mongoose');
 const colors = require('colors')
 const adminRoutes = require('./src/index');
+const cors = require('cors');
 
 const app = express();
 
 // Middleware to parse JSON
 app.use(express.json());
+app.use(cors()); // Enable CORS for all routes
+
+// OR Allow Specific Origins (Safer)
+app.use(
+  cors({
+    origin: 'http://localhost:3000', // Allow requests from React app
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 
 // Connect to MongoDB
 mongoose

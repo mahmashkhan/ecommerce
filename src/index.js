@@ -40,6 +40,7 @@ router.delete('/delete/product/:id', productDelete.productDelete)
 router.put('/update/product/:id', updateUpload.single("image"), updateProduct.updateProduct)
 router.get('/get/product', getProduct.getProducts)
 router.get('/get/product/:id', getProduct.getProdById)
+router.get('/get/image/:id', getProduct.getImageById)
 
 //order
 router.post('/order/cart', auth.authenticateToken, cart.cart)

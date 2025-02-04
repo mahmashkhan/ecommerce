@@ -7,10 +7,9 @@ const storage = multer.memoryStorage(); // Store file in memory as a buffer
  const uploads = multer({ storage });
 
 const createproduct = async (req, res) => {
-    const {prodName, description, price } = req.body;
-    const file = req.file; // Access the uploaded file via multer
+    const {prodName, description, price,imageUrl } = req.body;
 
-    if (!file || !description || !price || !prodName) {
+    if (!imageUrl || !description || !price || !prodName) {
         return res.status(400).json({ message: "Add complete details!" });
     }
 
@@ -20,10 +19,7 @@ const createproduct = async (req, res) => {
             prodName,
             description,
             price,
-            image: {
-                data: file.buffer,
-                contentType: file.mimetype, // Save the MIME type of the file
-            },
+            imageUrl
         });
 
         await newProduct.save(); // Save the product to the database
@@ -35,7 +31,7 @@ const createproduct = async (req, res) => {
                 name: newProduct.prodName,
                 description: newProduct.description,
                 price: newProduct.price,
-                imageContentType: newProduct.image.contentType, // Exclude the buffer for performance
+                imageUrl: newProduct.imageUrl, 
             },
         });
     } catch (error) {
