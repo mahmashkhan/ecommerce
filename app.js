@@ -13,7 +13,7 @@ app.use(cors()); // Enable CORS for all routes
 // OR Allow Specific Origins (Safer)
 app.use(
   cors({
-    origin: 'http://localhost:3000', // Allow requests from React app
+    origin: 'http://localhost:3001', // Allow requests from React app
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   })

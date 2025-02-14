@@ -14,6 +14,9 @@ const getProdById = async (req, res) => {
 const getImageById = async (req, res) => {
     try {
       const { id } = req.params;
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: "Invalid Product ID format" });
+    }
       const product = await Product.findById(id);
   
       if (product && product.image && product.image.data) {
