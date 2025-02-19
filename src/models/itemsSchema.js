@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const itemsSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
-    
+    name: { type: String, required: true ,ref: 'users'},
     items: [
         {
             product: { type: mongoose.Schema.Types.ObjectId, ref: 'products', required: true },   

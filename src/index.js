@@ -17,6 +17,10 @@ const order = require("./controllers/Order/order");
 const { getOrder, getOrderById } = require('./Admin/getOrder');
 const { getUser ,getUserById} = require('./Admin/getUser');
 const { deleteUser } = require('./Admin/deleteUser');
+const { confirmOrder, deliverOrder, cancelOrder } = require('./controllers/Order/confirmOrder');
+const getProductByCategory = require('./controllers/Products/getProductByCategory');
+const {category,getAllCategory} = require('./controllers/Products/category');
+
 // Token
 router.post('/generate-jwt', token.generateToken)
 
@@ -40,9 +44,17 @@ router.delete('/delete/product/:id', productDelete.productDelete)
 router.put('/update/product/:id', updateUpload.single("image"), updateProduct.updateProduct)
 router.get('/get/product', getProduct.getProducts)
 router.get('/get/product/:id', getProduct.getProdById)
-// router.get('/get/image/:id', getProduct.getImageById)
+router.get('/get/product/category/:category', getProductByCategory)
+router.post('/create/category', category)
+router.get('/get/all/category', getAllCategory)
+
 
 //order
-router.post('/order/cart', auth.authenticateToken, cart.cart)
-router.post('/order', auth.authenticateToken, order.order)
-module.exports = router;
+router.post('/order/cart', cart.cart)
+router.post('/order',  order.order)
+router.patch('/order/confirm/:orderId', confirmOrder); //change status to Shipped
+router.patch('/order/delivered/:orderId', deliverOrder); //change status to Delivered
+router.patch('/order/cancel/:orderId', cancelOrder); //change status to Cancelled
+
+
+module.exports = router;  

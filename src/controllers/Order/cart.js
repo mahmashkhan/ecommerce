@@ -3,7 +3,7 @@ const Product = require("../../models/prodctusSchema");
 const Items = require("../../models/itemsSchema");
 
 const cart = async (req, res) => {
-    const { userId, productId, quantity } = req.body;
+    const { userId,name, productId, quantity } = req.body;
 
     try {
         const product = await Product.findById(productId);
@@ -11,10 +11,11 @@ const cart = async (req, res) => {
             return res.status(400).json({ error: "Product not found" });
         }
         const price = product.price * quantity;
-        let cart = await Items.findOne({ user: userId });  //if cart is empty will create the new cart
+        let cart = await Items.findOne({ user: userId ,name:name});  //if cart is empty will create the new cart
         if (!cart) {
             cart = new Items({
                 user: userId,   //heres the new car
+                name:name,
                 items: [],
                 totalPrice: 0
             });

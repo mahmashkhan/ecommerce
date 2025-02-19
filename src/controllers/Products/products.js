@@ -7,9 +7,9 @@ const storage = multer.memoryStorage(); // Store file in memory as a buffer
  const uploads = multer({ storage });
 
 const createproduct = async (req, res) => {
-    const {prodName, description, price,imageUrl } = req.body;
+    const {prodName, description, price,imageUrl ,category} = req.body;
 
-    if (!imageUrl || !description || !price || !prodName) {
+    if (!imageUrl || !description || !price || !prodName ||!category) {
         return res.status(400).json({ message: "Add complete details!" });
     }
 
@@ -19,6 +19,7 @@ const createproduct = async (req, res) => {
             prodName,
             description,
             price,
+            category,
             imageUrl
         });
 
@@ -29,6 +30,7 @@ const createproduct = async (req, res) => {
             product: {
                 id: newProduct._id,
                 name: newProduct.prodName,
+                category: newProduct.category,
                 description: newProduct.description,
                 price: newProduct.price,
                 imageUrl: newProduct.imageUrl, 
