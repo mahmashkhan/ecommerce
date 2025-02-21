@@ -2,10 +2,10 @@ const express = require('express');
 const signup = require('./Admin/signup');
 const router = require("express").Router();
 const login = require('./Admin/login')
-const product = require('./controllers/Products/products');
+
+const {uploads,createproduct} = require('./controllers/Products/products');
 const productDelete = require('./controllers/Products/productDelete');
 const updateProduct = require("./controllers/Products/productUpdate")
-const uploads = product.uploads
 const updateUpload = updateProduct.updateUpload
 const getProduct = require("../src/controllers/Products/productGet")
 const userSignup = require("../src/controllers/Users/userSignup");
@@ -19,9 +19,10 @@ const { getUser ,getUserById} = require('./Admin/getUser');
 const { deleteUser } = require('./Admin/deleteUser');
 const { confirmOrder, deliverOrder, cancelOrder } = require('./controllers/Order/confirmOrder');
 const getProductByCategory = require('./controllers/Products/getProductByCategory');
-const {category,getAllCategory} = require('./controllers/Products/category');
+const {categoryUploads, createCategory,getAllCategory} = require('./controllers/Products/category');
 
-// Token
+
+// Token 
 router.post('/generate-jwt', token.generateToken)
 
 // Admin 
@@ -39,13 +40,13 @@ router.post('/user/Login', userLogin.userLogin);
 
 router.post('/user/login')
 //Products
-router.post('/product', uploads.single("image"), product.createproduct);
+router.post('/product', uploads.single("image"), createproduct);
 router.delete('/delete/product/:id', productDelete.productDelete)
 router.put('/update/product/:id', updateUpload.single("image"), updateProduct.updateProduct)
 router.get('/get/product', getProduct.getProducts)
 router.get('/get/product/:id', getProduct.getProdById)
 router.get('/get/product/category/:category', getProductByCategory)
-router.post('/create/category', category)
+router.post('/create/category',categoryUploads.single('image') ,createCategory)
 router.get('/get/all/category', getAllCategory)
 
 

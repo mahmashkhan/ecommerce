@@ -1,45 +1,46 @@
-const mongoose = require("mongoose");
-const product = require("../../models/prodctusSchema"); // Correctly import the model
 const multer = require("multer");
+const Product = require("../../models/prodctusSchema");
 
-// Set up Multer for file uploads
-const storage = multer.memoryStorage(); // Store file in memory as a buffer
- const uploads = multer({ storage });
+// Multer setup for storing image in memory
+const storage = multer.memoryStorage();
+const uploads = multer({ storage });
 
 const createproduct = async (req, res) => {
-    const {prodName, description, price,imageUrl ,category} = req.body;
-
-    if (!imageUrl || !description || !price || !prodName ||!category) {
-        return res.status(400).json({ message: "Add complete details!" });
-    }
-
     try {
-        // Create a new Product with image as a buffer
-        const newProduct = new product({
+        const { prodName, description, price, category } = req.body;
+        const image = req.file;
+
+        // Validate required fields
+        if (!image || !description || !price || !prodName || !category) {
+            return res.status(400).json({ message: "All fields including an image are required!" });
+        }
+
+        // Convert image buffer to Base64
+        const base64Image = `data:${image.mimetype};base64,${image.buffer.toString("base64")}`;
+
+        
+        const newProduct = new Product({
             prodName,
             description,
             price,
             category,
-            imageUrl
+            image: base64Image, // Store Base64 directly in MongoDB
         });
 
-        await newProduct.save(); // Save the product to the database
+        await newProduct.save();
 
-        res.status(200).json({
+        res.status(201).json({
             message: "Product Listed Successfully",
-            product: {
-                id: newProduct._id,
-                name: newProduct.prodName,
-                category: newProduct.category,
-                description: newProduct.description,
-                price: newProduct.price,
-                imageUrl: newProduct.imageUrl, 
-            },
+            product: newProduct, 
         });
-    } catch (error) {
+    } catch (error) { 
         console.error("Error saving product:", error);
         res.status(500).json({ message: "Error saving product", error: error.message });
-    }
+    } 
 };
 
+
 module.exports = { createproduct, uploads };
+
+// note
+//in this code image is save in db as base64 string so that it will be easy to render in frontend  just <img src={product.image} alt={product.prodName} /> will render the image

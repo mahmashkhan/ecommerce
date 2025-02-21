@@ -1,9 +1,9 @@
 
 const adminUser = require('../models/adminUser')
 const adminSignup = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password ,role } = req.body;
 
-    if (!name && !email && !password) {
+    if (!name && !email && !password && !role) {
         return res.status(400).json({ message: "All fields required" })
     }
     const adminExist =  await adminUser.findOne({email})
@@ -11,9 +11,9 @@ const adminSignup = async (req, res) => {
         res.status(400).json({message:"User Already exist"})
     }
     else{
-        const newAdmin = new adminUser({name, email, password })
+        const newAdmin = new adminUser({name, email, password ,role})
         await newAdmin.save()
-        res.status(201).json({message: "Success! ,user created"})
+        res.status(201).json({message: "Success! ,user created", newAdmin})
     }
 }
 module.exports = {adminSignup}

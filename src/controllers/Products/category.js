@@ -1,21 +1,28 @@
 const Category = require('../../models/categorySchema');
+const multer = require('multer');
 
-const category = async (req, res) => {
+const storage = multer.memoryStorage();
+const categoryUploads = multer({ storage });
+const createCategory = async (req, res) => {
     try {
-        const { category, image, slug } = req.body;
+        const { category, slug } = req.body;
+        const image = req.file;
 
-        if (!category || !image || !slug) {
+        if (!category || !slug || !image) {
             return res.status(400).json({ message: 'All fields are mandatory' });
         }
 
-        // Check if category already exists
-        const existingCategory = await Category.findOne({ category });
+        // Check if slug already exists (instead of category name)
+        const existingCategory = await Category.findOne({ slug }); // FIXED: Now checking slug, not category
         if (existingCategory) {
-            return res.status(400).json({ message: 'Category already exists' });
+            return res.status(400).json({ message: 'Category slug already exists' });
         }
 
+        // Convert image to Base64
+        const base64Image = `data:${image.mimetype};base64,${image.buffer.toString("base64")}`;
+
         // Create a new category
-        const newCategory = new Category({ category, image, slug });
+        const newCategory = new Category({ category, image: base64Image, slug });
         await newCategory.save();
 
         res.status(201).json({ message: "Category created successfully", data: newCategory });
@@ -25,6 +32,7 @@ const category = async (req, res) => {
     }
 };
 
+// Get all categories
 const getAllCategory = async (req, res) => {
     try {
         const data = await Category.find();
@@ -35,4 +43,4 @@ const getAllCategory = async (req, res) => {
     }
 };
 
-module.exports = { category, getAllCategory };
+module.exports = { createCategory, getAllCategory ,categoryUploads};
