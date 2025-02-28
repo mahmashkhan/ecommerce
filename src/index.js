@@ -2,8 +2,10 @@ const express = require('express');
 const signup = require('./Admin/signup');
 const router = require("express").Router();
 const login = require('./Admin/login')
-
-const {uploads,createproduct} = require('./controllers/Products/products');
+const { createShareHolder } = require('./controllers/LandingPage/Shareholder/createShareHolder');
+const getShareHolder = require('./controllers/LandingPage/Shareholder/getShareHolder');
+const {updateShareHolder} = require('./controllers/LandingPage/Shareholder/updateShareHolder');
+const { uploads, createproduct } = require('./controllers/Products/products');
 const productDelete = require('./controllers/Products/productDelete');
 const updateProduct = require("./controllers/Products/productUpdate")
 const updateUpload = updateProduct.updateUpload
@@ -11,15 +13,16 @@ const getProduct = require("../src/controllers/Products/productGet")
 const userSignup = require("../src/controllers/Users/userSignup");
 const userLogin = require("../src/controllers/Users/userLogin");
 const token = require("../src/controllers/Users/token");
-const auth = require("./Authentication/auth")
-const cart = require('./controllers/Order/cart')
+const auth = require("./Authentication/auth");
+const cart = require('./controllers/Order/cart');
 const order = require("./controllers/Order/order");
 const { getOrder, getOrderById } = require('./Admin/getOrder');
-const { getUser ,getUserById} = require('./Admin/getUser');
+const { getUser, getUserById } = require('./Admin/getUser');
 const { deleteUser } = require('./Admin/deleteUser');
 const { confirmOrder, deliverOrder, cancelOrder } = require('./controllers/Order/confirmOrder');
 const getProductByCategory = require('./controllers/Products/getProductByCategory');
-const {categoryUploads, createCategory,getAllCategory} = require('./controllers/Products/category');
+const { categoryUploads, createCategory, getAllCategory } = require('./controllers/Products/category');
+const LatestProducts = require('../src/controllers/Products/getLatestProduct')
 
 
 // Token 
@@ -46,16 +49,20 @@ router.put('/update/product/:id', updateUpload.single("image"), updateProduct.up
 router.get('/get/product', getProduct.getProducts)
 router.get('/get/product/:id', getProduct.getProdById)
 router.get('/get/product/category/:category', getProductByCategory)
-router.post('/create/category',categoryUploads.single('image') ,createCategory)
+router.post('/create/category', categoryUploads.single('image'), createCategory)
 router.get('/get/all/category', getAllCategory)
+router.get('/get/latest/products', LatestProducts)
 
 
 //order
 router.post('/order/cart', cart.cart)
-router.post('/order',  order.order)
+router.post('/order', order.order)
 router.patch('/order/confirm/:orderId', confirmOrder); //change status to Shipped
 router.patch('/order/delivered/:orderId', deliverOrder); //change status to Delivered
 router.patch('/order/cancel/:orderId', cancelOrder); //change status to Cancelled
 
-
+//shareholders
+router.post('/create/share-holder', createShareHolder)
+router.get('/get/share-holder', getShareHolder)
+router.put('/update/share-holder/:id', updateShareHolder)
 module.exports = router;  
