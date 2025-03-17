@@ -1,7 +1,7 @@
 const Order = require('../../models/orderScehma');
 
 const confirmOrder = async (req, res) => {
-    const { orderId } = req.params ;
+    const { orderId } = req.params;
     if (orderId) {
         const order = await Order.findOne({ _id: orderId })
         console.log("order", order);
@@ -14,14 +14,12 @@ const confirmOrder = async (req, res) => {
         order.status = 'Shipped';
         order.updatedAt = Date.now();
         await order.save();
-        res.status(200).json({ message: "Order Shipped" }) 
+        res.status(200).json({ message: "Order Shipped", status: order.status })
     }
- 
 }
-
 const deliverOrder = async (req, res) => {
     const { orderId } = req.params;
-    const order = await Order.findOne({ _id: orderId })
+    const order = await Order.findOne({ _id: orderId }) 
     if (!order) {
         res.status(404).json({ message: "Order not found" })
     }
@@ -29,15 +27,15 @@ const deliverOrder = async (req, res) => {
         res.status(400).json({ message: 'Order is not in Shipped Status' })
     }
     order.status = 'Delivered';
-    order.updatedAt = Date.now(); 
+    order.updatedAt = Date.now();
     await order.save()
     res.status(200).json({ message: "Order Delivered" })
 }
 const cancelOrder = async (req, res) => {
     const { orderId } = req.params;
-
+ 
     try {
-        const order = await Order.findOne({ _id: orderId });
+        const order = await Order.findOne({ _id: orderId });  
 
         if (!order) {
             return res.status(404).json({ message: "Order not found" });

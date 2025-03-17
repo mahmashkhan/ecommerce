@@ -11,7 +11,6 @@ const userLogin = async (req, res) => {
   if (!email || !password) {
     return res.status(400).json({ message: 'Please enter all credentials!' });
   }
-
   try {
     // Check if user exists
     const existingUser = await Users.findOne({ email });

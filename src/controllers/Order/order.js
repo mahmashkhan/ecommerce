@@ -2,7 +2,7 @@ const Order = require('../../models/orderScehma');
 const Cart = require('../../models/itemsSchema');
 
 const order = async (req, res) => {
-    const { userId } = req.body;
+    const { userId } = req.body;zz
 
     try {
         const cart = await Cart.findOne({ user: userId });
@@ -27,6 +27,6 @@ const order = async (req, res) => {
         console.error('Error placing order:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
-};
+};                                 
 
 module.exports = { order };
