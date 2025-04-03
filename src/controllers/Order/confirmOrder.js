@@ -11,8 +11,8 @@ const confirmOrder = async (req, res) => {
         if (order.status !== 'Pending') {
             return res.status(400).json({ message: 'Order is not in Pending status' });
         }
-        order.status = 'Shipped';
-        order.updatedAt = Date.now();
+        order.status = 'Shipped'; 
+        order.updatedAt = Date.now(); 
         await order.save();
         res.status(200).json({ message: "Order Shipped", status: order.status })
     }
@@ -59,6 +59,5 @@ const cancelOrder = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error' });
     }
 };
-
 
 module.exports = { confirmOrder, deliverOrder, cancelOrder }

@@ -2,7 +2,7 @@ const Order = require('../../models/orderScehma');
 const Cart = require('../../models/itemsSchema');
 
 const order = async (req, res) => {
-    const { userId } = req.body;zz
+    const { userId } = req.body;
 
     try {
         const cart = await Cart.findOne({ user: userId });
@@ -28,5 +28,4 @@ const order = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };                                 
-
 module.exports = { order };

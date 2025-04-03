@@ -26,7 +26,6 @@ const updateProduct = async (req, res) => {
                 description,
                 ...(file && {
                     image: {
-                        
                         contentType: file.mimetype,
                     },
                 }),
@@ -52,4 +51,4 @@ const updateProduct = async (req, res) => {
     }
 };
 
-module.exports = { updateProduct, updateUpload };
+module.exports = { updateProduct , updateUpload };

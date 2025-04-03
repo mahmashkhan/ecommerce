@@ -4,7 +4,7 @@ const router = require("express").Router();
 const login = require('./Admin/login')
 const { createShareHolder } = require('./controllers/LandingPage/Shareholder/createShareHolder');
 const getShareHolder = require('./controllers/LandingPage/Shareholder/getShareHolder');
-const {updateShareHolder} = require('./controllers/LandingPage/Shareholder/updateShareHolder');
+const { updateShareHolder } = require('./controllers/LandingPage/Shareholder/updateShareHolder');
 const { uploads, createproduct } = require('./controllers/Products/products');
 const productDelete = require('./controllers/Products/productDelete');
 const updateProduct = require("./controllers/Products/productUpdate")
@@ -22,7 +22,9 @@ const { deleteUser } = require('./Admin/deleteUser');
 const { confirmOrder, deliverOrder, cancelOrder } = require('./controllers/Order/confirmOrder');
 const getProductByCategory = require('./controllers/Products/getProductByCategory');
 const { categoryUploads, createCategory, getAllCategory } = require('./controllers/Products/category');
-const LatestProducts = require('../src/controllers/Products/getLatestProduct')
+const LatestProducts = require('../src/controllers/Products/getLatestProduct');
+const {landingPage} = require('./Admin/landingPage');
+const {getLandingImage} = require('./Admin/getLandingImage')
 
 
 // Token 
@@ -36,6 +38,10 @@ router.get('/get/orders/:id', getOrderById)
 router.get('/get/users', getUser)
 router.get('/get/users/:id', getUserById)
 router.delete('/delete/user/:id', deleteUser)
+
+//landing_page
+router.post('/upload/landing/image', uploads.single("image"), landingPage)
+router.get('/get/landing/image',  getLandingImage)
 
 //User 
 router.post('/user/signup', userSignup.userSignup);

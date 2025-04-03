@@ -3,25 +3,25 @@ const Product = require("../../models/prodctusSchema");
 const Items = require("../../models/itemsSchema");
 
 const cart = async (req, res) => {
-    const { userId,name, productId, quantity } = req.body;
+    const { email, name, productId, quantity } = req.body;
 
     try {
         const product = await Product.findById(productId);
         if (!product) {
-            return res.status(400).json({ error: "Product not found" });
+            return res.status(400).json({ error: "Product not found" });jm
         }
         const price = product.price * quantity;
-        let cart = await Items.findOne({ user: userId ,name:name});  //if cart is empty will create the new cart
+        let cart = await Items.findOne({ user: userId, name: name });
         if (!cart) {
             cart = new Items({
-                user: userId,   //heres the new car
-                name:name,
+                user: userId,
+                name: name,
                 items: [],
                 totalPrice: 0
             });
         }
-        const itemIndex = cart.items.findIndex(item => 
-            item.product.toString() === new mongoose.Types.ObjectId(productId).toString()  
+        const itemIndex = cart.items.findIndex(item =>
+            item.product.toString() === new mongoose.Types.ObjectId(productId).toString()
         );
         if (itemIndex > -1) { //-1 reutrn when comparison not found
             cart.items[itemIndex].quantity += quantity;
@@ -37,5 +37,6 @@ const cart = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
-
 module.exports = { cart };
+
+
