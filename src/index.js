@@ -16,7 +16,7 @@ const token = require("../src/controllers/Users/token");
 const auth = require("./Authentication/auth");
 const cart = require('./controllers/Order/cart');
 const order = require("./controllers/Order/order");
-const { getOrder, getOrderById } = require('./Admin/getOrder');
+const { getOrder } = require('./Admin/getOrder');
 const { getUser, getUserById } = require('./Admin/getUser');
 const { deleteUser } = require('./Admin/deleteUser');
 const { confirmOrder, deliverOrder, cancelOrder } = require('./controllers/Order/confirmOrder');
@@ -25,8 +25,12 @@ const { categoryUploads, createCategory, getAllCategory } = require('./controlle
 const LatestProducts = require('../src/controllers/Products/getLatestProduct');
 const {landingPage} = require('./Admin/landingPage');
 const {getLandingImage} = require('./Admin/getLandingImage')
+const {getCart} = require('../src/controllers/Order/getCart')
+const {getOrderById} = require('../src/controllers/Order/getOrderByid')
 
 
+
+ 
 // Token 
 router.post('/generate-jwt', token.generateToken)
 
@@ -34,7 +38,6 @@ router.post('/generate-jwt', token.generateToken)
 router.post('/signup', signup.adminSignup);
 router.post('/login', login.adminLogin);
 router.get('/get/orders', getOrder)
-router.get('/get/orders/:id', getOrderById)
 router.get('/get/users', getUser)
 router.get('/get/users/:id', getUserById)
 router.delete('/delete/user/:id', deleteUser)
@@ -46,6 +49,7 @@ router.get('/get/landing/image',  getLandingImage)
 //User 
 router.post('/user/signup', userSignup.userSignup);
 router.post('/user/Login', userLogin.userLogin);
+
 
 router.post('/user/login')
 //Products
@@ -61,7 +65,9 @@ router.get('/get/latest/products', LatestProducts)
 
 
 //order
-router.post('/order/cart', cart.cart)
+router.get('/get/cart/:id', getCart)
+router.get('/get/order/:id', getOrderById)
+router.post('/order/cart', cart.cart) 
 router.post('/order', order.order)
 router.patch('/order/confirm/:orderId', confirmOrder); //change status to Shipped
 router.patch('/order/delivered/:orderId', deliverOrder); //change status to Delivered
@@ -71,4 +77,4 @@ router.patch('/order/cancel/:orderId', cancelOrder); //change status to Cancelle
 router.post('/create/share-holder', createShareHolder)
 router.get('/get/share-holder', getShareHolder)
 router.put('/update/share-holder/:id', updateShareHolder)
-module.exports = router;  
+module.exports = router;    

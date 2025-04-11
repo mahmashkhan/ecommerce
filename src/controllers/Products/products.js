@@ -44,3 +44,4 @@ module.exports = { createproduct, uploads };
 
 // note
 //in this code image is save in db as base64 string so that it will be easy to render in frontend  just <img src={product.image} alt={product.prodName} /> will render the image
+   

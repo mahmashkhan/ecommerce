@@ -13,7 +13,7 @@ const createCategory = async (req, res) => {
         }
 
         // Check if slug already exists (instead of category name)
-        const existingCategory = await Category.findOne({ slug }); // FIXED: Now checking slug, not category
+        const existingCategory = await Category.findOne({ slug });
         if (existingCategory) {
             return res.status(400).json({ message: 'Category slug already exists' });
         }
@@ -43,4 +43,4 @@ const getAllCategory = async (req, res) => {
     }
 };
 
-module.exports = { createCategory, getAllCategory ,categoryUploads};
+module.exports = { createCategory, getAllCategory, categoryUploads };

@@ -4,7 +4,7 @@ const confirmOrder = async (req, res) => {
     const { orderId } = req.params;
     if (orderId) {
         const order = await Order.findOne({ _id: orderId })
-        console.log("order", order);
+        
         if (!order) {
             res.status(400).json({ message: "Order Not Found" })
         }
@@ -47,8 +47,7 @@ const cancelOrder = async (req, res) => {
         const result = await Order.updateOne(
             { _id: orderId },
             { $set: { status: 'Cancelled', updatedAt: Date.now() } }
-        );
-
+        ); 
         if (result.nModified === 0) {
             return res.status(400).json({ message: 'Failed to update the order' });
         }
