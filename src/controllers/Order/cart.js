@@ -65,7 +65,7 @@ const cart = async (req, res) => {
         // Respond with success, including updated cart
         res.status(200).json({
             message: 'Item added to cart',
-            cart
+            cart  
         });
     } catch (error) {
         console.error('Error adding to cart:', error);

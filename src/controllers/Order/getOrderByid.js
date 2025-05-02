@@ -1,16 +1,25 @@
-const Order = require('../../models/orderScehma')
-const getOrderById = async(req,res) => {
-    const { id } = req.params;
-    if (!id){
-        res.status(404).json({message:'order id not found'})
+const Order = require('../../models/orderScehma');
+const mongoose = require('mongoose');
+
+const getOrderById = async (req, res) => {
+    const { userId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) { //because userId in db is saved as object
+        return res.status(400).json({ message: 'Invalid User ID' });
     }
-    try {
-        
-        const order = await Order.findById(id); // or .findOne({ _id: id })
-        if (!order) return res.status(404).json({ message: 'Order not found' });
-        res.json(order);
+
+    try { 
+        const orders = await Order.find({ user: new mongoose.Types.ObjectId(userId) });
+
+
+        if (!orders || orders.length === 0) {
+            return res.status(404).json({ message: 'No orders found for this user' });
+        }
+
+        return res.json(orders);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error(error);
+        return res.status(500).json({ error: error.message });
     }
-}
-module.exports = {getOrderById}
+};
+module.exports = { getOrderById };

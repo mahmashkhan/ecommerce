@@ -10,7 +10,7 @@ const productDelete = require('./controllers/Products/productDelete');
 const updateProduct = require("./controllers/Products/productUpdate")
 const updateUpload = updateProduct.updateUpload
 const getProduct = require("../src/controllers/Products/productGet")
-const userSignup = require("../src/controllers/Users/userSignup");
+const userSignup = require("../src/controllers/Users/userSignup"); 
 const userLogin = require("../src/controllers/Users/userLogin");
 const token = require("../src/controllers/Users/token");
 const auth = require("./Authentication/auth");
@@ -27,6 +27,8 @@ const {landingPage} = require('./Admin/landingPage');
 const {getLandingImage} = require('./Admin/getLandingImage')
 const {getCart} = require('../src/controllers/Order/getCart')
 const {getOrderById} = require('../src/controllers/Order/getOrderByid')
+const {getOrderByOrderId} = require('../src/controllers/Order/getOrderByOrderid');
+const { blogs ,getBlogs} = require('./Admin/blogs');
 
 
 
@@ -42,6 +44,9 @@ router.get('/get/users', getUser)
 router.get('/get/users/:id', getUserById)
 router.delete('/delete/user/:id', deleteUser)
 
+//blogs
+router.post('/blog', blogs)
+router.get('/get/blog', getBlogs)
 //landing_page
 router.post('/upload/landing/image', uploads.single("image"), landingPage)
 router.get('/get/landing/image',  getLandingImage)
@@ -66,14 +71,16 @@ router.get('/get/latest/products', LatestProducts)
 
 //order
 router.get('/get/cart/:id', getCart)
-router.get('/get/order/:id', getOrderById)
+router.get('/get/order/:userId', getOrderById)
+router.get('/get/order/by/:id', getOrderByOrderId)
 router.post('/order/cart', cart.cart) 
 router.post('/order', order.order)
 router.patch('/order/confirm/:orderId', confirmOrder); //change status to Shipped
 router.patch('/order/delivered/:orderId', deliverOrder); //change status to Delivered
 router.patch('/order/cancel/:orderId', cancelOrder); //change status to Cancelled
 
-//shareholders
+
+//shareholders    
 router.post('/create/share-holder', createShareHolder)
 router.get('/get/share-holder', getShareHolder)
 router.put('/update/share-holder/:id', updateShareHolder)
