@@ -1,4 +1,4 @@
-const Product = require("../../models/prodctusSchema"); // Correctly import the model
+const Product = require("../../models/prodctusSchema"); 
 const mongoose = require("mongoose")
 const productDelete = async (req, res) => {
     const { id } = req.params;

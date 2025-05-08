@@ -1,4 +1,4 @@
-const Product = require("../../models/prodctusSchema"); // Correctly import the model
+const Product = require("../../models/prodctusSchema"); 
 const multer = require("multer");
 const mongoose = require("mongoose");
 

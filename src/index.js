@@ -29,6 +29,8 @@ const {getCart} = require('../src/controllers/Order/getCart')
 const {getOrderById} = require('../src/controllers/Order/getOrderByid')
 const {getOrderByOrderId} = require('../src/controllers/Order/getOrderByOrderid');
 const { blogs ,getBlogs} = require('./Admin/blogs');
+const {addAbout, getAbout} = require('../src/Admin/about');
+const {deleteSingleProductFromCart} = require('./controllers/Order/deleteCart');
 
 
 
@@ -43,6 +45,8 @@ router.get('/get/orders', getOrder)
 router.get('/get/users', getUser)
 router.get('/get/users/:id', getUserById)
 router.delete('/delete/user/:id', deleteUser)
+router.post ('/add/about', addAbout)
+router.get ('/get/about', getAbout)
 
 //blogs
 router.post('/blog', blogs)
@@ -71,6 +75,7 @@ router.get('/get/latest/products', LatestProducts)
 
 //order
 router.get('/get/cart/:id', getCart)
+router.delete('/delete/item/cart/:cartId/:productId',deleteSingleProductFromCart)
 router.get('/get/order/:userId', getOrderById)
 router.get('/get/order/by/:id', getOrderByOrderId)
 router.post('/order/cart', cart.cart) 

@@ -11,4 +11,4 @@ const LatestProduct =async (req, res) => {
         res.status(500).json({ message: 'Failed to fetch products' });
     }
 };
-module.exports = LatestProduct;  
+module.exports = LatestProduct;     

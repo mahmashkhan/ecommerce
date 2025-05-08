@@ -1,5 +1,5 @@
 
-const adminUser = require('../models/adminUser')
+const adminUser = require('../models/adminUser') 
 const adminSignup = async (req, res) => {
     const { name, email, password ,role } = req.body;
 

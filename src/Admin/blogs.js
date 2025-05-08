@@ -1,4 +1,4 @@
-const Blogs = require("../../src/models/blogSchema"); 
+const Blogs = require("../models/blogSchema"); 
 
 const blogs = async (req, res) => {
   const blogData = req.body;

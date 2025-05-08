@@ -12,7 +12,7 @@ const adminLogin = async (req, res) => {
 
   try {
     const existingAdmin = await adminUser.findOne({ email });
-    if (!existingAdmin) {
+    if (!existingAdmin) { 
       return res.status(404).json({ message: 'User does not exist' });
     } 
 
@@ -23,6 +23,6 @@ const adminLogin = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
-};
+}; 
 
 module.exports = { adminLogin };

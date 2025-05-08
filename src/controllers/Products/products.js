@@ -7,11 +7,11 @@ const uploads = multer({ storage });
 
 const createproduct = async (req, res) => {
     try {
-        const { prodName, description, price, category } = req.body;
+        const { prodName, description, price, category, features } = req.body;
         const image = req.file;
 
         // Validate required fields
-        if (!image || !description || !price || !prodName || !category) {
+        if (!image || !description || !price || !prodName || !category||!features) {
             return res.status(400).json({ message: "All fields including an image are required!" });
         }
 
@@ -24,10 +24,11 @@ const createproduct = async (req, res) => {
             description,
             price,
             category,
+            features,
             image: base64Image, // Store Base64 directly in MongoDB
         });
 
-        await newProduct.save();
+        await newProduct.save();  
 
         res.status(201).json({
             message: "Product Listed Successfully",
