@@ -37,4 +37,4 @@ const deleteSingleProductFromCart = async (req, res) => {
   }
 };
 
-module.exports = {deleteSingleProductFromCart};
+module.exports = {deleteSingleProductFromCart}; 
