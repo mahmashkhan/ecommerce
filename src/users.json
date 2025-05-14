@@ -1,0 +1,41 @@
+[
+  {
+    "name": "mehmash",
+    "email": "mak@gmail.com",
+    "password": "1234"
+  },
+  {
+    "name": "mehmash",
+    "email": "mak@gmaill.com",
+    "password": "1234"
+  },
+  {
+    "name": "mehmash",
+    "email": "email@email.com",
+    "password": "12345"
+  },
+  {
+    "email": "",
+    "password": "sdf"
+  },
+  {
+    "name": "khannn",
+    "email": "khan@yopmail.com",
+    "password": "sd654321"
+  },
+  {
+    "name": "1234",
+    "email": "1234",
+    "password": "sdf1234"
+  },
+  {
+    "name": "makmak",
+    "email": "makmak@gmail.com",
+    "password": "123456"
+  },
+  {
+    "name": "asd",
+    "email": "kap@gmail.com",
+    "password": "sdf"
+  }
+]
