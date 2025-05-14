@@ -1,13 +1,20 @@
-const Product = require("../../models/prodctusSchema"); 
+const Product = require("../../models/prodctusSchema");
 const multer = require("multer");
 const mongoose = require("mongoose");
 
+// Multer setup for storing image in memory
 const storage = multer.memoryStorage();
 const updateUpload = multer({ storage });
 
+
 const updateProduct = async (req, res) => {
-    const { description, name, price } = req.body;
-    const file = req.file;
+    const { prodName, description, price, features } = req.body;
+    const image = req.file;
+
+    if (!prodName || !description || !price || !features) {
+        res.status(400).json({ error: 'all feilds are require ' })
+    }
+
 
     const { id } = req.params;
     if (!id) {
@@ -16,33 +23,32 @@ const updateProduct = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).json({ message: "Invalid Product ID" });
     }
-
+    const base64Image = `data:${image.mimetype};base64,${image.buffer.toString("base64")}`;
     try {
         const updatedProduct = await Product.findByIdAndUpdate(
             id,
             {
-                name,
+                name : prodName,
                 price,
                 description,
-                ...(file && {
-                    image: {
-                        contentType: file.mimetype,
-                    },
-                }),
+                features,
+                image: base64Image,
             },
-            { new: true } 
+            
         );
+        await updatedProduct.save()
 
         if (!updatedProduct) {
             return res.status(404).json({ message: "Product not found" });
         }
 
         res.status(200).json({
-            message: "Product Updated",
+            message: "Product Updated", 
             id: updatedProduct._id,
             name: updatedProduct.name,
             description: updatedProduct.description,
             price: updatedProduct.price,
+            features: updatedProduct.features,
             image: updatedProduct.image,
         });
     } catch (error) {
@@ -51,4 +57,4 @@ const updateProduct = async (req, res) => {
     }
 };
 
-module.exports = { updateProduct , updateUpload };
+module.exports = { updateProduct, updateUpload };

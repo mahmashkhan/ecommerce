@@ -69,7 +69,7 @@ router.get('/get/product', getProduct.getProducts)
 router.get('/get/product/:id', getProduct.getProdById)
 router.get('/get/product/category/:category', getProductByCategory)
 router.post('/create/category', categoryUploads.single('image'), createCategory)
-router.get('/get/all/category', getAllCategory)
+router.get('/get/all/category', getAllCategory) 
 router.get('/get/latest/products', LatestProducts)
 
 

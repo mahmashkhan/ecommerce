@@ -7,7 +7,7 @@ const deleteSingleProductFromCart = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(cartId) || !mongoose.Types.ObjectId.isValid(productId)) {
     return res.status(400).json({ message: 'Invalid cartId or productId' });
   }
- 
+   
   try {
     // Find the cart
     const cart = await Cart.findById(cartId);
@@ -37,4 +37,4 @@ const deleteSingleProductFromCart = async (req, res) => {
   }
 };
 
-module.exports = {deleteSingleProductFromCart}; 
+module.exports = {deleteSingleProductFromCart};

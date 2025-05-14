@@ -12,7 +12,7 @@ const order = async (req, res) => {
             return res.status(400).json({ message: 'Cart is empty' });
         }
 
-        const paymentIntent = await stripe.paymentIntents.create({
+        const paymentIntent = await stripe.paymentIntents.create({ 
             amount: cart.totalPrice,
             currency: 'usd',
             payment_method: paymentMethodId,   //come from frontend
