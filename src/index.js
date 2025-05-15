@@ -19,7 +19,7 @@ const order = require("./controllers/Order/order");
 const { getOrder } = require('./Admin/getOrder');
 const { getUser, getUserById } = require('./Admin/getUser');
 const { deleteUser } = require('./Admin/deleteUser');
-const { confirmOrder, deliverOrder, cancelOrder } = require('./controllers/Order/confirmOrder');
+const { confirmOrder, deliverOrder, cancelOrder ,refundOrder} = require('./controllers/Order/confirmOrder');
 const getProductByCategory = require('./controllers/Products/getProductByCategory');
 const { categoryUploads, createCategory, getAllCategory } = require('./controllers/Products/category');
 const LatestProducts = require('../src/controllers/Products/getLatestProduct');
@@ -31,9 +31,6 @@ const {getOrderByOrderId} = require('../src/controllers/Order/getOrderByOrderid'
 const { blogs ,getBlogs} = require('./Admin/blogs');
 const {addAbout, getAbout} = require('../src/Admin/about');
 const {deleteSingleProductFromCart} = require('./controllers/Order/deleteCart');
-
-
-
  
 // Token 
 router.post('/generate-jwt', token.generateToken)
@@ -47,6 +44,7 @@ router.get('/get/users/:id', getUserById)
 router.delete('/delete/user/:id', deleteUser)
 router.post ('/add/about', addAbout)
 router.get ('/get/about', getAbout)
+
 
 //blogs
 router.post('/blog', blogs)
@@ -83,6 +81,7 @@ router.post('/order', order.order)
 router.patch('/order/confirm/:orderId', confirmOrder); //change status to Shipped
 router.patch('/order/delivered/:orderId', deliverOrder); //change status to Delivered
 router.patch('/order/cancel/:orderId', cancelOrder); //change status to Cancelled
+router.patch('/order/refund/:orderId', refundOrder); //change status to Cancelled
 
 
 //shareholders    
